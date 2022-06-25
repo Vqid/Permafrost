@@ -1,0 +1,7 @@
+aiofiles~=0.8.0
+aiosqlite~=0.17.0
+hikari[speedups]>=2.0.0.dev108
+hikari-lightbulb>=2.2.2
+python-dotenv~=0.20.0
+black>=20.8b1
+uvloop~=0.16.0; os_name != "nt"
