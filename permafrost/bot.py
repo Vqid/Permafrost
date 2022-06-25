@@ -3,6 +3,7 @@ import lightbulb
 import os
 import logging
 import permafrost
+from permafrost import Database
 
 log = logging.getLogger(__name__)
 
@@ -15,9 +16,15 @@ bot = lightbulb.BotApp(
 
 bot.load_extensions_from("./permafrost/extensions")
 
-@bot.listen
+@bot.listen(hikari.StartingEvent)
 async def on_starting(event: hikari.StartingEvent) -> None:
-    print(f"Logging in as {bot.get_me().username} (Version: {permafrost.__version__})")
+    log.info(f"❄️  Logging in as {permafrost.__username__}...")
+    bot.d.db = Database(permafrost._dynamic, permafrost._static)
+    await bot.d.db.connect()
+    
+@bot.listen(hikari.StartedEvent)
+async def on_ready(event: hikari.StartedEvent) -> None:
+    log.info(f"❄️  Ready!")
 
 def run() -> None:
     if os.name != 'nt':
